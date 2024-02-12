@@ -202,4 +202,17 @@ exports.login = async (req, res) => {
   }
 };
 
-
+// current user
+exports.currentUser = async (req, res) => {
+  console.log(req.user)
+  try {
+    const currentUser = await User.findById(req.user._id);
+    res.status(201).json({
+      msg: "user is in the current session",
+      currentUser
+    })
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+  }
