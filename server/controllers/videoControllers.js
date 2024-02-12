@@ -1,10 +1,11 @@
 const Video = require("../models/videoSchema");
 const { cloudinary } = require("../config/cloudinaryConfig");
 
-exports.uploadVideo = async (req, res) => {
-  if (req.user.role !== "admin") {
-    return res.status(403).json({ message: "Unauthorized" });
-  }
+exports.createVideo = async (req, res) => {
+  // ! I used a middleware for checking
+  // if (req.user.role !== "admin" || req.user.role !== "streaming_user") {
+  //   return res.status(403).json({ message: "Unauthorized" });
+  // }
 
   try {
     const result = await cloudinary.uploader.upload(req.file.path, {
