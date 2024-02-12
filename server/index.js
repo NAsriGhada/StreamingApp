@@ -3,6 +3,7 @@ require("dotenv").config();
 const connectDB = require("./config/connectDB");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
+const videoRoutes = require("./routes/videoRoutes");
 
 
 connectDB();
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/user", userRoutes);
+app.use("/api/create-video", videoRoutes);
 
 
 app.listen(port, () => {
