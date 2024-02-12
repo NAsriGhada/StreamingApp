@@ -15,15 +15,15 @@ exports.uploadVideo = async (req, res) => {
     const video = new Video({
       title: req.body.title,
       description: req.body.description,
-      videoUrl: result.secure_url,
+      videoUrl: result.secure_url, // this is provided by the cloudinary service
       // Include other fields like duration, format, etc., if available
       uploadedBy: req.user._id, // This assumes req.user is populated from some auth middleware
     });
-
+    const savedVideo = await video.save(); // This line actually saves the document to MongoDB
     return res.status(200).json({
       message: "Video uploaded successfully",
       data: result,
-      vid: video
+      vid: savedVideo,
     });
   } catch (error) {
     console.error("Error uploading video:", error);

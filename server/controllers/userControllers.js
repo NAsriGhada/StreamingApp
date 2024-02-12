@@ -130,7 +130,7 @@ exports.register = async (req, res) => {
     // Create JWT token
     const payload = {
       user: {
-        id: user.id,
+        userId: user._id,
         username: user.username,
         role: user.role,
       },
@@ -139,17 +139,15 @@ exports.register = async (req, res) => {
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: "5h" },
+      { expiresIn: "7d" },
       (err, token) => {
         if (err) throw err;
-        res
-          .status(201)
-          .json({
-            err,
-            message: "User created successfully",
-            user: user,
-            token,
-          });
+        res.status(201).json({
+          err,
+          message: "User created successfully",
+          user: user,
+          token,
+        });
       }
     );
   } catch (err) {
@@ -178,7 +176,7 @@ exports.login = async (req, res) => {
     // Create JWT token
     const payload = {
       user: {
-        id: user.id,
+        userId: user._id,
         username: user.username,
         role: user.role,
       },
@@ -187,7 +185,7 @@ exports.login = async (req, res) => {
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: "5h" },
+      { expiresIn: "7d" },
       (err, token) => {
         if (err) throw err;
         res.status(201).json({

@@ -36,7 +36,6 @@
 //   }
 // };
 
-
 const jwt = require("jsonwebtoken");
 // const User = require("../models/user");
 
@@ -70,12 +69,15 @@ exports.auth = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded.user;
+    // req.user = decoded
+    // req.user = decoded.user;
+    // coming from the token's payload
+    req.user = {
+      _id: decoded.user.userId,
+      role: decoded.user.role,
+    };
     next();
   } catch (err) {
     res.status(401).json({ msg: "Token is not valid" });
   }
 };
-
-
-
