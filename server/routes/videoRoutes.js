@@ -1,4 +1,9 @@
-const { createVideo } = require("../controllers/videoControllers");
+const {
+  createVideo,
+  allVideos,
+  oneVideo,
+  getVideoDetails,
+} = require("../controllers/videoControllers");
 const { isAdmin } = require("../middlewares/isAdminMiddleware");
 const { auth } = require("../middlewares/authMiddleware");
 const multerMiddleware = require("../middlewares/multerMiddleware");
@@ -25,6 +30,16 @@ router.post(
   allowVideoUpload,
   createVideo
 );
+
+//get all videos for all users
+router.get("/all/videos", auth, allVideos);
+
+// get one video
+router.get("/one/video/:videoId", auth, oneVideo);
+
+// get one video with specific details
+router.get("/detail/video/:videoId", auth, getVideoDetails);
+
 
 module.exports = router;
 

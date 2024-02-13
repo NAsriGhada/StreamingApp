@@ -29,6 +29,7 @@ const videoSchema = new Schema(
         required: false,
       },
     ],
+    // A user can upload many videos (one-to-many from User to Video).
     uploadedBy: {
       type: Schema.Types.ObjectId,
       ref: "User",

@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/create-video", videoRoutes);
+app.use("/api/video", videoRoutes);
 
 
 app.listen(port, () => {
