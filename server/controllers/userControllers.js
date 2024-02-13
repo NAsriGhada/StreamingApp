@@ -121,10 +121,17 @@ exports.register = async (req, res) => {
     user = new User({
       username,
       email,
-      password: await bcrypt.hash(password, 10), // Hash the password
+      // password: await bcrypt.hash(password, 10), // Hash the password
+      password,
       role,
     });
 
+    // hash password
+    const salt = 10;
+    const hashPassword = await bcrypt.hash(password, salt);
+    user.password = hashPassword;
+
+    // save user in the database
     await user.save();
 
     // Create JWT token
@@ -203,7 +210,9 @@ exports.login = async (req, res) => {
 };
 
 // current user
+//token in req.headers
 exports.currentUser = async (req, res) => {
+  console.log(req)
   console.log(req.user)
   try {
     const currentUser = await User.findById(req.user._id);

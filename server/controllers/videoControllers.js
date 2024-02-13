@@ -1,4 +1,5 @@
 const Video = require("../models/videoSchema");
+const User = require("../models/user");
 const { cloudinary } = require("../config/cloudinaryConfig");
 
 exports.createVideo = async (req, res) => {
@@ -21,10 +22,24 @@ exports.createVideo = async (req, res) => {
       uploadedBy: req.user._id, // This assumes req.user is populated from some auth middleware
     });
     const savedVideo = await video.save(); // This line actually saves the document to MongoDB
+
+    // after uploading the videos successfully add them to the user schema
+    const allVideos = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $push: { videos: savedVideo._id },
+      },
+      { new: true, safe: true, upsert: true } // Return the updated document and ensure safety
+    );
+    console.log(allVideos)
     return res.status(200).json({
       message: "Video uploaded successfully",
       data: result,
       vid: savedVideo,
+      userInfo: {
+        msg: "user's info with attached videos",
+        allVideos
+      },
     });
   } catch (error) {
     console.error("Error uploading video:", error);

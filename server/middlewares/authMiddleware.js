@@ -72,6 +72,7 @@ exports.auth = async (req, res, next) => {
     // req.user = decoded
     // req.user = decoded.user;
     // coming from the token's payload
+    // it creates a user property of the req object
     req.user = {
       _id: decoded.user.userId,
       role: decoded.user.role,

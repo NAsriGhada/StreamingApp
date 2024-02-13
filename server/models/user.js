@@ -23,6 +23,12 @@ const userSchema = new Schema(
       enum: ["admin", "user", "streaming_user"],
       default: "user",
     },
+    videos: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Video",
+      },
+    ],
     // Add additional fields as needed for user profile (e.g., name, avatar, etc.)
   },
   { timestamps: true }
