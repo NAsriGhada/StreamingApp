@@ -12,8 +12,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link as RouterLink } from 'react-router-dom'; // Rename for clarity
-
+import { Link as RouterLink, useNavigate } from "react-router-dom"; // Rename for clarity
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/authSlice";
 
 function Copyright(props) {
   return (
@@ -38,13 +39,36 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const [credentials, setCredentials] = React.useState({
+    email: "",
+    password: "",
+  });
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    dispatch(
+      loginUser({
+        email: data.get("email"),
+        password: data.get("password"),
+      })
+    )
+      .unwrap() // Unwraps the promise
+      .then(() => {
+        navigate("/profile"); // Navigate on successful registration
+      })
+      .catch((error) => {
+        // Handle error, e.g., show error message
+        console.error("Registration failed:", error);
+      });
+  };
+
+  const handelChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
   return (
@@ -80,6 +104,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handelChange}
             />
             <TextField
               margin="normal"
@@ -90,6 +115,7 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handelChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -105,16 +131,12 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link  variant="body2">
-                  Forgot password?
-                </Link>
+                <Link variant="body2">Forgot password?</Link>
               </Grid>
               <Grid item>
-                <RouterLink to={"/"}>
-                  <Link variant="body2">
+                  <Link href="/" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
-                </RouterLink>
               </Grid>
             </Grid>
           </Box>

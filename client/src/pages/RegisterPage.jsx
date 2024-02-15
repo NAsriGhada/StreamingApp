@@ -96,7 +96,7 @@ export default function RegisterPage() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
                   name="username"
@@ -107,7 +107,7 @@ export default function RegisterPage() {
                   autoFocus
                   onChange={handelChange}
                 />
-              </Grid>
+              </Grid> */}
               {/* <Grid item xs={12} sm={6}>
                 <TextField
                   required
@@ -118,6 +118,17 @@ export default function RegisterPage() {
                   autoComplete="family-name"
                 />
               </Grid> */}
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="username"
+                  label="username"
+                  name="username"
+                  autoComplete="username"
+                  onChange={handelChange}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -160,9 +171,9 @@ export default function RegisterPage() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <RouterLink to={"/login"}>
-                  <Link variant="body2">Already have an account? Sign in</Link>
-                </RouterLink>
+                <Link href="/login" variant="body2">
+                  Already have an account? Sign in
+                </Link>
               </Grid>
             </Grid>
           </Box>
