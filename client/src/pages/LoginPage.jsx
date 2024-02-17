@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as RouterLink, useNavigate } from "react-router-dom"; // Rename for clarity
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/authSlice";
 
 function Copyright(props) {
@@ -48,6 +48,10 @@ export default function SignIn() {
     password: "",
   });
 
+  // get the user's info to redirect them
+  const { user, status } = useSelector((state) => state.auth);
+
+  // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -57,10 +61,18 @@ export default function SignIn() {
         password: data.get("password"),
       })
     )
-      .unwrap() // Unwraps the promise
-      .then(() => {
-        navigate("/profile"); // Navigate on successful registration
-      })
+      // .unwrap() // Unwraps the promise
+      // .then(() => {
+      //   console.log('users info', user)
+      //   if (user.role === "streaming_user")
+      //     navigate("/streamer"); // Navigate on successful registration
+      //   else if (user.role === "admin") {
+      //     navigate("/admin");
+      //   }
+      //   else {
+      //     navigate("/profile");
+      //   }
+      // })
       .catch((error) => {
         // Handle error, e.g., show error message
         console.error("Registration failed:", error);
@@ -70,6 +82,25 @@ export default function SignIn() {
   const handelChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+
+  //  Effect to redirect based on role after successful login
+  React.useEffect(() => {
+    if (status === "succeeded" && user) {
+      console.log("checking the user", user)
+      console.log(status)
+      // Redirect based on user's role
+      switch (user.role) {
+        case "streaming_user":
+          navigate("/streamer");
+          break;
+        case "admin":
+          navigate("/admin");
+          break;
+        default:
+          navigate("/profile");
+      }
+    }
+  }, [user, status, navigate]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -134,9 +165,9 @@ export default function SignIn() {
                 <Link variant="body2">Forgot password?</Link>
               </Grid>
               <Grid item>
-                  <Link href="/" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
+                <Link href="/" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
               </Grid>
             </Grid>
           </Box>

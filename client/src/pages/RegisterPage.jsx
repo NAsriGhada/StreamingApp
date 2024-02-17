@@ -45,6 +45,7 @@ export default function RegisterPage() {
     username: "",
     email: "",
     password: "",
+    role: "user", //by default user
   });
 
   const handleSubmit = (event) => {
@@ -55,11 +56,16 @@ export default function RegisterPage() {
         username: data.get("username"),
         email: data.get("email"),
         password: data.get("password"),
+        role: credentials.role,
       })
     )
       .unwrap() // Unwraps the promise
       .then(() => {
-        navigate("/profile"); // Navigate on successful registration
+        if(credentials.role === "streaming_user")
+          navigate("/streamer") // Navigate on successful registration
+        else {
+          navigate("/profile");
+        }
       })
       .catch((error) => {
         // Handle error, e.g., show error message
@@ -68,7 +74,20 @@ export default function RegisterPage() {
   };
 
   const handelChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    // setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox") {
+      setCredentials({
+        ...credentials,
+        role: checked ? "streaming_user" : "user", // Toggle between "streaming_user" and "user"
+      });
+    } else {
+      setCredentials({
+        ...credentials,
+        [name]: value,
+      });
+    }
   };
 
   return (
@@ -155,7 +174,12 @@ export default function RegisterPage() {
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
+                    <Checkbox
+                      name="role"
+                      checked={credentials.role === "streaming_user"}
+                      onChange={handelChange}
+                      color="primary"
+                    />
                   }
                   label="Sign up as Streamer."
                 />
