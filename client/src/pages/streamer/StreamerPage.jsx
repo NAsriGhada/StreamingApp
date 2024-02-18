@@ -1,21 +1,3 @@
-// import React from 'react'
-// import { useSelector } from "react-redux";
-
-
-
-// const StreamerPage = () => {
-//     const user = useSelector((state) => state.auth.user);
-//     console.log(user);
-//     if (!user) {
-//       // Handle the case when user is null, e.g., display a loading indicator or a message
-//       return <div>Loading...</div>;
-//     }
-//   return <div>StreamerPage {user.username}
-//   </div>;
-// }
-
-// export default StreamerPage
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -34,27 +16,28 @@ import MailIcon from "@mui/icons-material/Mail";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../redux/authSlice";
-
+import NavBar from "../../components/NavBar";
 
 const drawerWidth = 240;
 
 export default function StreamerPage() {
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-      console.log(user);
-      if (!user) {
-        // Handle the case when user is null, e.g., display a loading indicator or a message
-        return <div>Loading...</div>;
+  console.log(user);
+  if (!user) {
+    // Handle the case when user is null, e.g., display a loading indicator or a message
+    return <div>Loading...</div>;
   }
-  const handleLogout = () => {
-    dispatch(logoutUser());
-    navigate("/"); // Redirect to login page after logout
-  };
+  // const handleLogout = () => {
+  //   dispatch(logoutUser());
+  //   navigate("/login"); // Redirect to login page after logout
+  // };
   return (
     <>
-      <Box sx={{ display: "flex" }}>
+      <NavBar />
+      {/* <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar
           position="fixed"
@@ -141,8 +124,8 @@ export default function StreamerPage() {
             ultrices sagittis orci a.
           </Typography>
         </Box>
-      </Box>
-      <button onClick={handleLogout}>Logout</button>
+      </Box> */}
+      {/* <button onClick={handleLogout}>Logout</button> */}
     </>
   );
 }

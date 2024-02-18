@@ -86,8 +86,8 @@ export default function SignIn() {
   //  Effect to redirect based on role after successful login
   React.useEffect(() => {
     if (status === "succeeded" && user) {
-      console.log("checking the user", user)
-      console.log(status)
+      console.log("checking the user", user);
+      console.log(status);
       // Redirect based on user's role
       switch (user.role) {
         case "streaming_user":

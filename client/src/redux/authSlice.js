@@ -73,7 +73,7 @@ export const fetchCurrentUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk("auth/logout", async () => {
   try {
-      localStorage.removeItem("token");
+    localStorage.removeItem("token");
   } catch (error) {
     console.log(error);
   }
@@ -128,6 +128,7 @@ export const authSlice = createSlice({
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
         state.status = "succeeded";
         // Update the state with the user data
+        console.log(action)
         state.user = action.payload; // Make sure the payload structure matches what you expect
       })
       .addCase(fetchCurrentUser.rejected, (state, action) => {

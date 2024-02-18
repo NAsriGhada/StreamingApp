@@ -7,6 +7,7 @@ import StreamerPage from "./pages/streamer/StreamerPage";
 import AdminPage from "./pages/admin/AdminPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+
 function App() {
   return (
     <div className="App">
