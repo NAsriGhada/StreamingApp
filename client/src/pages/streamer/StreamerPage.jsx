@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../redux/authSlice";
 import NavBar from "../../components/NavBar";
+import UploadVideo from "../../components/UploadVideo";
 
 const drawerWidth = 240;
 
@@ -126,6 +127,7 @@ export default function StreamerPage() {
         </Box>
       </Box> */}
       {/* <button onClick={handleLogout}>Logout</button> */}
+      <UploadVideo />
     </>
   );
 }

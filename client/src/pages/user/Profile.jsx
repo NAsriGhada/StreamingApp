@@ -33,6 +33,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import VideoComponent from "../../components/video/VideoComponent";
 // import { logoutUser } from "../../redux/authSlice";
 
 export default function Profile() {
@@ -56,6 +57,7 @@ export default function Profile() {
   return (
     <>
       <NavBar />
+      <VideoComponent />
       <p>{user.username}'s profile</p>
       <Card sx={{ display: "flex" }}>
         <Box sx={{ display: "flex", flexDirection: "column" }}>

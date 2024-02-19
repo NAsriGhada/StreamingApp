@@ -2,7 +2,8 @@
 
 const allowVideoUpload = (req, res, next) => {
   const { role } = req.user;
-
+  console.log("Received headers:", req.headers); // Log all headers
+  console.log("Authorization header:", req.headers.authorization); // Specifically log the Authorization header
   // Allow both admins and streamers to proceed
   if (role === "admin" || role === "streaming_user") {
     next();

@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
   // destination: function (req, file, cb) {
   //   cb(null, path.join(__dirname, '..', 'uploads/')); // This is the uploads directory where files will be saved
   // },
-  destination: "../../uploads",
+  destination: "../uploads",
   filename: function (req, file, cb) {
     // Create a unique filename with the original name and current timestamp
     cb(
@@ -15,6 +15,7 @@ const storage = multer.diskStorage({
     );
   },
 });
+console.log(storage)
 
 // Initialize the multer middleware with the storage engine and file filter (if any)
 const upload = multer({

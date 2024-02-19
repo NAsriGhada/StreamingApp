@@ -5,6 +5,7 @@ import { logoutUser } from "../../redux/authSlice";
 import { fetchAllUsers } from "../../redux/adminSlice";
 import UsersList from "../../components/admin/UsersList";
 import NavBar from "../../components/NavBar";
+import UploadVideo from "../../components/UploadVideo";
 
 
 export default function AdminPage() {
@@ -54,6 +55,7 @@ export default function AdminPage() {
           return <UsersList key={user._id} user={user} />;
         })}
       </table>
+      <UploadVideo />
       {/* <button onClick={handleLogout}>Logout</button> */}
     </>
   );

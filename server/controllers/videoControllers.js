@@ -35,7 +35,7 @@ exports.createVideo = async (req, res) => {
     return res.status(200).json({
       message: "Video uploaded successfully",
       data: result,
-      vid: savedVideo,
+      video: savedVideo,
       userInfo: {
         msg: "user's info with attached videos",
         allVideos,

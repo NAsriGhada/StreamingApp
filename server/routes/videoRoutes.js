@@ -26,8 +26,8 @@ const router = express.Router();
 router.post(
   "/videos/upload",
   auth,
-  multerMiddleware.single("video"),
   allowVideoUpload,
+  multerMiddleware.single("video"),
   createVideo
 );
 

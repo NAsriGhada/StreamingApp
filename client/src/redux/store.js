@@ -4,6 +4,7 @@ import adminReducer from "../redux/adminSlice";
 import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
+import videoSlice from "./videoSlice";
 // I used redux-persist to save data during refresh
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   // other reducers go here...
   admin: adminReducer,
+  video: videoSlice,
 });
 
 const persistConfig = {
