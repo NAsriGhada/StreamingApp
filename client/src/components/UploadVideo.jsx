@@ -23,6 +23,7 @@ const UploadVideo = () => {
     setFormData({ ...formData, video: e.target.files[0] });
   };
   // Prepares and dispatches the form data when the form is submitted
+  // since we're uploading files, we can either stringify json or use the form below
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Initialize a new FormData object
