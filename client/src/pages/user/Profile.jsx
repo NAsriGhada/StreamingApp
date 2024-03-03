@@ -1,6 +1,6 @@
 // import React from "react";
 // import { useSelector } from "react-redux";
-import NavBar from "../../components/NavBar";
+import NavBar from "../../components/navBar/NavBar";
 
 // const Profile = () => {
 //   // Accessing user information from auth slice of Redux store
@@ -34,7 +34,10 @@ import SkipNextIcon from "@mui/icons-material/SkipNext";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import VideoComponent from "../../components/video/VideoComponent";
+import Slider from "../../components/Slider";
+import { fetchCurrentUser } from "../../redux/authSlice";
 // import { logoutUser } from "../../redux/authSlice";
+import mac from "../../assets/images/mac.jpg"
 
 export default function Profile() {
   const theme = useTheme();
@@ -44,6 +47,11 @@ export default function Profile() {
 
   const navigate = useNavigate();
   console.log(user);
+
+  // React.useEffect(() => {
+  //   dispatch(fetchCurrentUser());
+  // }, [dispatch]);
+
   if (!user) {
     // Handle the case when user is null, e.g., display a loading indicator or a message
     return <div>Loading...</div>;
@@ -57,8 +65,9 @@ export default function Profile() {
   return (
     <>
       <NavBar />
+      <Slider />
       <VideoComponent />
-      <p>{user.username}'s profile</p>
+      <p>{user.username || user.currentUser.username}'s profile</p>
       <Card sx={{ display: "flex" }}>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <CardContent sx={{ flex: "1 0 auto" }}>
@@ -96,7 +105,7 @@ export default function Profile() {
         <CardMedia
           component="img"
           sx={{ width: 151 }}
-          image="/static/images/cards/live-from-space.jpg"
+          image={mac}
           alt="Live from space album cover"
         />
       </Card>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/authSlice";
 import { fetchAllUsers } from "../../redux/adminSlice";
 import UsersList from "../../components/admin/UsersList";
-import NavBar from "../../components/NavBar";
+import NavBar from "../../components/navBar/NavBar";
 import UploadVideo from "../../components/UploadVideo";
 
 

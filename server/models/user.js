@@ -18,12 +18,15 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    picture: {
+      type: String
+    }, 
     role: {
       type: String,
       enum: ["admin", "user", "streaming_user"],
       default: "user",
     },
-    // videos can be linked to one user(depending on the role) (many-to-one from Video to User
+    // videos can be linked to one user(depending on the role) (many-to-one from Video to User)
     videos: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -5,7 +5,7 @@ export const fetchAllUsers = createAsyncThunk(
   "admin/fetchAllUsers",
   async (_, { getState, rejectWithValue }) => {
     // Retrieve the token directly inside the thunk to ensure it's current
-    const { token } = getState().admin;
+    const { token } = getState().auth;
     // const token = localStorage.getItem("token");
     // const token = getState().auth.token;
     console.log(token, "admins token");
@@ -28,7 +28,7 @@ export const fetchAllUsers = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
   "admin/deleteUser",
   async (userId, { getState, rejectWithValue, dispatch }) => {
-    const { token } = getState().admin;
+    const { token } = getState().auth;
     if (!token) return rejectWithValue("No token found");
     try {
       const response = await axios.delete(
@@ -48,7 +48,7 @@ export const deleteUser = createAsyncThunk(
 
 const initialState = {
   users: [],
-  token: localStorage.getItem("token"),
+  // token: localStorage.getItem("token"),
   status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed',
   error: null,
 };

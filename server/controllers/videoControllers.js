@@ -50,7 +50,7 @@ exports.createVideo = async (req, res) => {
 // get all videos
 exports.allVideos = async (req, res) => {
   try {
-    const videos = await Video.find();
+    const videos = await Video.find().populate("uploadedBy", "picture username");;
     res.status(201).json({
       msg: "getting all videos successfully",
       videos,

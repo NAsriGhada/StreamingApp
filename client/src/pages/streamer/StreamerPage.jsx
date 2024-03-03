@@ -16,7 +16,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../redux/authSlice";
-import NavBar from "../../components/NavBar";
+import NavBar from "../../components/navBar/NavBar";
 import UploadVideo from "../../components/UploadVideo";
 
 const drawerWidth = 240;

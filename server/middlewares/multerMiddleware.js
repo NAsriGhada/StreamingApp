@@ -18,16 +18,17 @@ const storage = multer.diskStorage({
 console.log(storage)
 
 // Initialize the multer middleware with the storage engine and file filter (if any)
-const upload = multer({
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    // Accept video files only
-    if (!file.originalname.match(/\.(mp4|mov|avi|wmv|flv)$/)) {
-      return cb(new Error("Only video files are allowed!"), false);
-    }
-    cb(null, true);
-  },
-});
+// const upload = multer({
+//   storage: storage,
+//   fileFilter: function (req, file, cb) {
+//     // Accept video files only
+//     if (!file.originalname.match(/\.(mp4|mov|avi|wmv|flv)$/)) {
+//       return cb(new Error("Only video files are allowed!"), false);
+//     }
+//     cb(null, true);
+//   },
+// });
+const upload = multer({ storage: storage });
 
 module.exports = upload;
 

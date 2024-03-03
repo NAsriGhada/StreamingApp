@@ -51,14 +51,14 @@ export const loginUser = createAsyncThunk(
 // Get the current authenticated user
 export const fetchCurrentUser = createAsyncThunk(
   "auth/fetchCurrentUser",
-  async ({ getState, rejectWithValue }) => {
+  async (userId, { rejectWithValue }) => {
     // Retrieve the token directly inside the thunk to ensure it's current
     //  const { token } = getState().auth;
     const token = localStorage.getItem("token");
     if (!token) return rejectWithValue("No token found");
     try {
       const response = await axios.get(
-        "http://localhost:8080/api/user/current",
+        `http://localhost:8080/api/user/current`,
         {
           headers: { Authorization: `${token}` },
         }
@@ -71,6 +71,7 @@ export const fetchCurrentUser = createAsyncThunk(
   }
 );
 
+// logout
 export const logoutUser = createAsyncThunk("auth/logout", async () => {
   try {
     localStorage.removeItem("token");
@@ -79,11 +80,39 @@ export const logoutUser = createAsyncThunk("auth/logout", async () => {
   }
 });
 
+// upload profile picture
+export const uploadProfilePicture = createAsyncThunk(
+  "auth/upload",
+  async ({ userId, file }, { rejectWithValue, dispatch }) => {
+    const token = localStorage.getItem("token");
+    if (!token) return rejectWithValue("No token found");
+    const formData = new FormData();
+    formData.append("myPhoto", file); // 'myPhoto' should match the name expected by multer on the backend
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/api/user/upload-picture/${userId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `${token}`, // Corrected header setup
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      dispatch(fetchCurrentUser());
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const initialState = {
   user: null,
   // token: token || null,
   // token: localStorage.getItem("token"),
   token: null,
+  profilePicture: null,
   status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed',
   error: null,
 };
@@ -128,7 +157,7 @@ export const authSlice = createSlice({
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
         state.status = "succeeded";
         // Update the state with the user data
-        console.log(action)
+        console.log(action);
         state.user = action.payload; // Make sure the payload structure matches what you expect
       })
       .addCase(fetchCurrentUser.rejected, (state, action) => {
@@ -147,6 +176,21 @@ export const authSlice = createSlice({
     builder.addCase(logoutUser.rejected, (state, action) => {
       state.status = "failed";
       state.error = action.payload.error;
+    });
+    //upload profile pictures
+    builder.addCase(uploadProfilePicture.pending, (state) => {
+      state.status = "loading";
+      state.error = null;
+    })
+    .addCase(uploadProfilePicture.fulfilled, (state, action) => {
+      state.status = "succeeded";
+      state.profilePicture = action.payload; // Assuming the backend response includes the picture URL
+        state.user = action.payload.user;
+      state.error = null;
+    })
+    .addCase(uploadProfilePicture.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.payload || "Failed to upload picture";
     });
   },
 });

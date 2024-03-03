@@ -6,6 +6,7 @@ import Profile from "./pages/user/Profile";
 import StreamerPage from "./pages/streamer/StreamerPage";
 import AdminPage from "./pages/admin/AdminPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import UpdateAcount from "./pages/user/UpdateAcount";
 
 
 function App() {
@@ -20,6 +21,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/update-profile/:userId"
+            element={
+              <ProtectedRoute>
+                <UpdateAcount />
               </ProtectedRoute>
             }
           />

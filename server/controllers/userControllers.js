@@ -105,6 +105,8 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const { cloudinary } = require("../config/cloudinaryConfig");
+
 
 // User Registration
 exports.register = async (req, res) => {
@@ -216,16 +218,78 @@ exports.login = async (req, res) => {
 // current user
 //token in req.headers
 exports.currentUser = async (req, res) => {
-  console.log(req)
-  console.log(req.user)
+  console.log(req);
+  console.log(req.user);
   try {
     const currentUser = await User.findById(req.user._id);
     res.status(201).json({
       msg: "user is in the current session",
-      currentUser
-    })
+      currentUser,
+    });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");
   }
+};
+
+// updating profile pictures
+exports.uploadPicture = async (req, res) => {
+  console.log(req.file);
+  try {
+    // Upload the picture to Cloudinary and get the URL
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      resource_type: "image",
+    });
+
+    // Update the user's picture field with the Cloudinary URL
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id, // Assuming req.user._id is the ID of the user whose picture is being updated
+      {
+        $set: { picture: result.secure_url }, // Use $set to update the picture field
+      },
+      { new: true } // Return the updated document
+    );
+
+    console.log(updatedUser);
+
+    // Respond with success and the updated user information
+    return res.status(200).json({
+      message: "Picture uploaded successfully",
+      data: result,
+      updatedUser,
+    });
+  } catch (error) {
+    console.error("Error uploading picture:", error);
+    return res.status(500).json({ message: "Error uploading picture", error });
   }
+};
+
+  
+  // const userId = req.user._id;
+  // let pictureUrl = "";
+  // if (req.file) {
+  //   pictureUrl = req.file.filename; // Assuming you want to save the filename in the database
+  // }
+
+  // try {
+  //   // You need to correctly set the 'picture' field within the $set operation.
+  //   const user = await User.findByIdAndUpdate(
+  //     // userId,
+  //     { _id: req.params.id },
+  //     {
+  //       $set: {
+  //         ...req.body, // This spreads any other body fields you might want to update. Be cautious with spreading user-provided data.
+  //         picture: pictureUrl, // This sets the 'picture' field to the filename
+  //       },
+  //     },
+  //     { new: true }
+  //   ); // { new: true } option returns the document after update was applied.
+
+  //   res.status(200).json(user);
+  // } catch (error) {
+  //   console.error(error.message);
+  //   res.status(500).send("Server error");
+  // }
+  
+
+

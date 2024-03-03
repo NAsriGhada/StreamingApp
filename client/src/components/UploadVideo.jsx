@@ -2,8 +2,22 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { uploadVideos } from "../redux/videoSlice";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const UploadVideo = () => {
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const user = useSelector((state) => state.auth.user.userId);
@@ -35,41 +49,59 @@ const UploadVideo = () => {
     }
     // Dispatch the action to upload the video, passing the FormData object
     dispatch(uploadVideos(uploadFormData));
+    navigate("/profile");
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title:</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-          />
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label">Title:</label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                required
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Description:</label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                required
+                className="form-control"
+                rows="3"
+              ></textarea>
+            </div>
+            <div>
+              <label className="form-label">Video File:</label>
+              <input
+                type="file"
+                name="video"
+                accept="video/*"
+                onChange={handleFileChange}
+                required
+                className="form-control form-control-lg"
+              />
+            </div>
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+            >
+              Upload file
+              <VisuallyHiddenInput type="submit" />
+            </Button>
+          </form>
         </div>
-        <div>
-          <label>Description:</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          ></textarea>
-        </div>
-        <div>
-          <label>Video File:</label>
-          <input
-            type="file"
-            name="video"
-            accept="video/*"
-            onChange={handleFileChange}
-            required
-          />
-        </div>
-        <button type="submit">Upload Video</button>
-      </form>
+      </div>
     </div>
   );
 };

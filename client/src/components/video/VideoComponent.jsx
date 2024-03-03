@@ -9,16 +9,14 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-// import { styled } from "@mui/material/styles";
-import Grid from "@mui/material/Unstable_Grid2";
-import Box from "@mui/material/Box";
+import { Box, Grid } from "@mui/material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -41,19 +39,31 @@ const VideoComponent = () => {
   React.useEffect(() => {
     dispatch(fetchAllVideos());
   }, [dispatch]);
+  console.log(videos);
 
   return (
     <div>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
+      <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
+        <Grid
+          container
+          spacing={2}
+          justifyContent="center"
+          sx={{ maxWidth: "lg", margin: "auto" }}
+        >
           {videos.map((el) => (
             <Grid item xs={12} sm={6} md={4} key={el._id}>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345, margin: "auto" }}>
                 <CardHeader
                   avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                      R
-                    </Avatar>
+                    el.uploadedBy.picture ? (
+                      <Avatar src={el.uploadedBy.picture} />
+                    ) : (
+                      <Avatar sx={{ bgcolor: red[500] }}>
+                        {el.uploadedBy.username
+                          ? el.uploadedBy.username.charAt(0).toUpperCase()
+                          : ""}
+                      </Avatar>
+                    )
                   }
                   action={
                     <IconButton aria-label="settings">
