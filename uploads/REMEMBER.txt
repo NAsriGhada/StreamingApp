@@ -1,8 +1,0 @@
-Remember to handle tokens securely and consider using HTTP-only cookies or other secure methods for storing authentication tokens if security is a concern. Also, be sure to clear the local state on logout to prevent protected information from lingering in the client-side state.
-EX: // Example in an Express.js server
-res.cookie('token', token, {
-  httpOnly: true,
-  secure: true, // only transmit cookie over https
-  sameSite: 'strict', // CSRF protection
-  maxAge: 3600000, // expires in 1 hour
-});
