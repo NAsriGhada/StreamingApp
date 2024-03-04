@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../redux/authSlice";
+import { fetchCurrentUser, logoutUser } from "../../redux/authSlice";
 import { fetchAllUsers } from "../../redux/adminSlice";
 import UsersList from "../../components/admin/UsersList";
 import NavBar from "../../components/navBar/NavBar";
 import UploadVideo from "../../components/UploadVideo";
-
+import { Button } from "@mui/material";
+import { current } from "@reduxjs/toolkit";
 
 export default function AdminPage() {
   const dispatch = useDispatch();
@@ -25,6 +26,12 @@ export default function AdminPage() {
   //   dispatch(logoutUser());
   //   navigate("/login"); // Redirect to login page after logout
   // };
+
+  const handleProfile = () => {
+    dispatch(fetchCurrentUser())
+    console.log("coming from admins page")
+    navigate("/profile"); // Redirect to login page after logout
+  };
 
   return (
     <>
@@ -57,6 +64,9 @@ export default function AdminPage() {
       </table>
       <UploadVideo />
       {/* <button onClick={handleLogout}>Logout</button> */}
+      <Button variant="contained" color="success" onClick={handleProfile}>
+        Profile{" "}
+      </Button>
     </>
   );
 }

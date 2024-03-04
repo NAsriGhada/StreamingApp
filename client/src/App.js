@@ -7,6 +7,7 @@ import StreamerPage from "./pages/streamer/StreamerPage";
 import AdminPage from "./pages/admin/AdminPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UpdateAcount from "./pages/user/UpdateAcount";
+import ErrorPage from "./pages/error/ErrorPage";
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/*" element={ <ErrorPage />} />
         </Routes>
       </Router>
     </div>
