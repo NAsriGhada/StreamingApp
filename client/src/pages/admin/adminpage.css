@@ -1,0 +1,40 @@
+.d-flex {
+    display: flex;
+    /* background-image: linear-gradient(to right bottom, #4f2cdc, #6b2ede, #8230e0, #9634e1, #a938e3); */
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    height: 100vh;
+    background-color: #333;
+    /* Example color */
+    color: #fff;
+    /* Text color */
+}
+
+.sidebar .nav-link {
+    color: #fff;
+    /* Sidebar link color */
+}
+
+.sidebar .nav-link.active {
+    background-color: #666;
+    /* Active link background */
+}
+
+/* Main Content Styling */
+.main-content {
+    padding: 20px;
+}
+
+.manage_users{
+    text-align: center;
+    margin: 1%;
+}
+

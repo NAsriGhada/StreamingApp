@@ -65,7 +65,8 @@ export default function NavBar() {
   const user = useSelector((state) => state.auth.user);
   console.log("user from navbar", user);
   const handleUpdateProfileRedirect = () => {
-    navigate(`/update-profile/${user.userId || user.currentUser._id}`);
+    // navigate(`/update-profile/${user.userId || user.currentUser._id || user._id}`);
+    navigate(`/update-profile/${user.userId || user._id}`);
   };
 
   //     const fileInputRef = React.useRef(null);

@@ -1,3 +1,7 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
 *,
 *::before,
 *::after {
@@ -18,7 +22,7 @@ html {
   scroll-behavior: smooth;
 }
 
-@media (min-width: 1440px) {
+/* @media (min-width: 1440px) {
   html {
     zoom: 1.5;
   }
@@ -34,10 +38,10 @@ html {
   html {
     zoom: 2.5;
   }
-}
+} */
 
 ::-webkit-scrollbar {
-  width: 1.3rem;
+  width: 0.3rem;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -55,8 +59,11 @@ html {
 }
 
 body {
-  font-size: 1.6rem;
+  /* font-size: 1.6rem; */
+  /* font-size: 1rem; */
   background: var(--bg);
+  /* background-image: linear-gradient(to right bottom, #4f2cdc, #6b2ede, #8230e0, #9634e1, #a938e3); */
+  /* background-image:  linear-gradient(to right top, #051937, #4a315b, #8f4871, #d06876, #ff9671); */
 }
 
 .container {
@@ -184,3 +191,8 @@ body {
 .swiper-pagination .swiper-pagination-bullet-active {
   background: var(--primary);
 }
+
+
+
+
+

@@ -64,7 +64,7 @@ export default function RegisterPage() {
         if(credentials.role === "streaming_user")
           navigate("/streamer") // Navigate on successful registration
         else {
-          navigate("/profile");
+          navigate("/main-page");
         }
       })
       .catch((error) => {

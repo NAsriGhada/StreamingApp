@@ -71,7 +71,7 @@ const VideoComponent = () => {
                     </IconButton>
                   }
                   title={el.title}
-                  subheader="September 14, 2016"
+                  subheader={`uploaded on ${new Date(el.createdAt).toLocaleDateString()}`}
                 />
                 <CardMedia
                   component="video"

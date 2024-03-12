@@ -107,7 +107,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const { cloudinary } = require("../config/cloudinaryConfig");
 
-
 // User Registration
 exports.register = async (req, res) => {
   const { username, email, password, role } = req.body;
@@ -264,32 +263,47 @@ exports.uploadPicture = async (req, res) => {
   }
 };
 
-  
-  // const userId = req.user._id;
-  // let pictureUrl = "";
-  // if (req.file) {
-  //   pictureUrl = req.file.filename; // Assuming you want to save the filename in the database
-  // }
+// const userId = req.user._id;
+// let pictureUrl = "";
+// if (req.file) {
+//   pictureUrl = req.file.filename; // Assuming you want to save the filename in the database
+// }
 
-  // try {
-  //   // You need to correctly set the 'picture' field within the $set operation.
-  //   const user = await User.findByIdAndUpdate(
-  //     // userId,
-  //     { _id: req.params.id },
-  //     {
-  //       $set: {
-  //         ...req.body, // This spreads any other body fields you might want to update. Be cautious with spreading user-provided data.
-  //         picture: pictureUrl, // This sets the 'picture' field to the filename
-  //       },
-  //     },
-  //     { new: true }
-  //   ); // { new: true } option returns the document after update was applied.
+// try {
+//   // You need to correctly set the 'picture' field within the $set operation.
+//   const user = await User.findByIdAndUpdate(
+//     // userId,
+//     { _id: req.params.id },
+//     {
+//       $set: {
+//         ...req.body, // This spreads any other body fields you might want to update. Be cautious with spreading user-provided data.
+//         picture: pictureUrl, // This sets the 'picture' field to the filename
+//       },
+//     },
+//     { new: true }
+//   ); // { new: true } option returns the document after update was applied.
 
-  //   res.status(200).json(user);
-  // } catch (error) {
-  //   console.error(error.message);
-  //   res.status(500).send("Server error");
-  // }
-  
+//   res.status(200).json(user);
+// } catch (error) {
+//   console.error(error.message);
+//   res.status(500).send("Server error");
+// }
 
-
+// update users
+exports.updateUser = async (req, res) => {
+  try {
+    const updateUser = await User.findByIdAndUpdate(
+      req.user._id,
+      { $set: { ...req.body } },
+      { new: true }
+    );
+    console.log(updateUser)
+    return res.status(200).json({
+      message: "User updated successfully",
+      updateUser,
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return res.status(500).json({ message: "Error updating user", error });
+  }
+};

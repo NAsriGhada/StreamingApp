@@ -2,12 +2,13 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
-import Profile from "./pages/user/Profile";
+// import Profile from "./pages/user/Profile";
 import StreamerPage from "./pages/streamer/StreamerPage";
 import AdminPage from "./pages/admin/AdminPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UpdateAcount from "./pages/user/UpdateAcount";
 import ErrorPage from "./pages/error/ErrorPage";
+import MainPage from "./pages/user/MainPage";
 
 
 function App() {
@@ -17,11 +18,12 @@ function App() {
         <Routes>
           <Route path="/" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/*" element={<ErrorPage />} />
           <Route
-            path="/profile"
+            path="/main-page"
             element={
               <ProtectedRoute>
-                <Profile />
+                <MainPage />
               </ProtectedRoute>
             }
           />
@@ -49,7 +51,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/*" element={ <ErrorPage />} />
         </Routes>
       </Router>
     </div>

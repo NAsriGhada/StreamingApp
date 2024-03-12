@@ -97,7 +97,7 @@ export default function SignIn() {
           navigate("/admin");
           break;
         default:
-          navigate("/profile");
+          navigate("/main-page");
       }
     }
   }, [user, status, navigate]);
