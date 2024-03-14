@@ -9,7 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import UpdateAcount from "./pages/user/UpdateAcount";
 import ErrorPage from "./pages/error/ErrorPage";
 import MainPage from "./pages/user/MainPage";
-
+import Profile from "./pages/user/profile/Profile";
 
 function App() {
   return (
@@ -48,6 +48,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AdminPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/:userId"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

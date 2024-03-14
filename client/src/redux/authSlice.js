@@ -107,6 +107,34 @@ export const uploadProfilePicture = createAsyncThunk(
   }
 );
 
+// edit user
+// needs some work
+export const editUser = createAsyncThunk(
+  "auth/edit",
+  async ({ userId, file }, { rejectWithValue, dispatch }) => {
+    const token = localStorage.getItem("token");
+    if (!token) return rejectWithValue("No token found");
+    const formData = new FormData();
+    formData.append("myPhoto", file); // 'myPhoto' should match the name expected by multer on the backend
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/api/user/upload-picture/${userId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `${token}`, // Corrected header setup
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      dispatch(fetchCurrentUser());
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const initialState = {
   user: null,
   // token: token || null,
